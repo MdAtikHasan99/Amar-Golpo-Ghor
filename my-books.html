@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/images/icon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Books - Amar Golpo Ghor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header-nav {
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 1rem 0;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #495057;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-link:hover {
+            color: #007bff;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #007bff;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 2.25rem;
+            color: #343a40;
+        }
+        main {
+            flex-grow: 1;
+            padding: 3rem 0;
+        }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .book-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e9ecef;
+        }
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        .book-image-container {
+            position: relative;
+            padding-top: 100%;
+            overflow: hidden;
+        }
+        .book-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .book-card:hover .book-image {
+            transform: scale(1.05);
+        }
+        .book-content {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .book-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 0.4rem;
+            line-height: 1.3;
+            min-height: 2.6rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .book-author {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 0.6rem;
+        }
+        .book-description {
+            font-size: 0.75rem;
+            color: #495057;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .read-now-button,
+        .remove-my-books-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.7rem 1rem;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+            border-radius: 9999px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .read-now-button {
+            background-color: #007bff;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+        .read-now-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        }
+        .remove-my-books-button {
+            background-color: #dc3545; /* Red for Remove */
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        .remove-my-books-button:hover {
+            background-color: #c82333; /* Darker red on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+        }
+        .read-now-button svg,
+        .remove-my-books-button svg {
+            margin-left: 0.4rem;
+            width: 16px;
+            height: 16px;
+        }
+        .empty-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            padding: 3rem;
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        footer {
+            background-color: #343a40; /* Dark background for footer */
+            color: #f8f9fa; /* Light text */
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow on top */
+        }
+        .footer-links a {
+            color: #adb5bd; /* Lighter gray for footer links */
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #007bff; /* Primary blue on hover */
+        }
+        .footer-text {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #ced4da;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.75rem; }
+            .nav-link { font-size: 0.9rem; }
+            .section-title { font-size: 2.25rem; margin-bottom: 2rem; }
+            .book-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1rem;
+                padding: 0 0.8rem;
+            }
+            .book-title { font-size: 1.1rem; }
+            .book-author { font-size: 0.75rem; }
+            .book-description { font-size: 0.7rem; -webkit-line-clamp: 5; }
+            .read-now-button { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+            .favorite-icon-button { padding: 6px; }
+            .favorite-icon { width: 20px; height: 20px; }
+            footer { padding: 1.5rem 0; }
+            .footer-links a { margin: 0 0.8rem; font-size: 0.9rem; }
+            .footer-text { font-size: 0.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.75rem; }
+            .nav-link { font-size: 0.9rem; }
+            .section-title { font-size: 2.25rem; }
+            .book-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+            .book-image-container { padding-top: 100%; }
+            .book-title { font-size: 1.1rem; }
+            .book-author { font-size: 0.75rem; }
+            .book-description { font-size: 0.7rem; -webkit-line-clamp: 5; }
+            .read-now-button, .remove-my-books-button { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+            .read-now-button svg, .remove-my-books-button svg { width: 14px; height: 14px; }
+            .empty-message { padding: 2rem; font-size: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .header-nav .container { flex-direction: column; align-items: center; }
+            .header-nav nav ul { margin-top: 1rem; width: 100%; justify-content: space-around; }
+            .book-grid { grid-template-columns: 1fr; padding: 0 0.5rem; }
+            .book-card { margin: 0 auto; max-width: 250px; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-nav">
+        <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4">
+            <h1 class="logo">Amar Golpo Ghor</h1>
+            <ul class="flex space-x-6 sm:space-x-8 mt-4 sm:mt-0">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="my-books.html" class="nav-link">My Books</a></li>
+                <li><a href="genres.html" class="nav-link">Genres</a></li>
+                <li><a href="settings.html" class="nav-link">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container mx-auto text-center mb-10">
+            <h2 class="section-title">My Reading List</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">Here are the books you've added to your personal collection.</p>
+        </section>
+
+        <div id="myBooksGrid" class="book-grid">
+            <!-- Dynamically loaded books will appear here -->
+            <p id="loadingMessage" class="col-span-full text-center text-gray-500 text-lg">Loading your books...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container mx-auto">
+            <div class="footer-links flex flex-wrap justify-center text-center gap-4">
+                <a href="index.html">Home</a>
+                <a href="my-books.html">My Books</a>
+                <a href="genres.html">Genres</a>
+                <a href="settings.html">Settings</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-conditions.html">Terms & Conditions</a>
+            </div>
+            <p class="footer-text mt-4">&copy; 2025 Amar Golpo Ghor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * Gets the current list of book IDs saved to "My Books" from localStorage.
+         * @returns {string[]} An array of book IDs.
+         */
+        function getMyBooks() {
+            const myBooksJson = localStorage.getItem('myBooks');
+            return myBooksJson ? JSON.parse(myBooksJson) : [];
+        }
+
+        /**
+         * Saves the updated list of book IDs to "My Books" in localStorage.
+         * @param {string[]} bookIds - The array of book IDs to save.
+         */
+        function saveMyBooks(bookIds) {
+            localStorage.setItem('myBooks', JSON.stringify(bookIds));
+        }
+
+        /**
+         * Removes a book from "My Books" and updates the UI.
+         * @param {string} bookId - The ID of the book to remove.
+         */
+        function removeMyBook(bookId) {
+            let myBooks = getMyBooks();
+            const index = myBooks.indexOf(bookId);
+
+            if (index > -1) {
+                myBooks.splice(index, 1);
+                saveMyBooks(myBooks);
+                // Re-load the books on the My Books page to reflect the change
+                loadMyBooks();
+            }
+        }
+
+        /**
+         * Generates a book card HTML element for My Books page.
+         * @param {Object} book - The book object from books.json.
+         * @returns {HTMLElement} The created book card element.
+         */
+        function createMyBookCard(book) {
+            const bookCard = document.createElement('div');
+            bookCard.className = 'book-card';
+
+            const imageUrl = book.imageUrl || `https://placehold.co/200x200/CCCCCC/333333?text=${encodeURIComponent(book.title.replace(/ /g, '+'))}`;
+
+            bookCard.innerHTML = `
+                <div class="book-image-container">
+                    <img src="${imageUrl}" onerror="this.onerror=null; this.src='https://placehold.co/200x200/CCCCCC/333333?text=Image+Error';" alt="Book Cover - ${book.title}" class="book-image">
+                </div>
+                <div class="book-content">
+                    <div>
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">by ${book.author}</p>
+                        <p class="book-description">${book.description || 'No description available.'}</p>
+                    </div>
+                    <div class="button-group">
+                        <a href="book-reader.html?bookId=${book.id}" class="read-now-button">
+                            Read Book
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open-text"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/><path d="M10 12H8"/><path d="M16 12h2"/><path d="M16 16h2"/><path d="M10 16H8"/></svg>
+                        </a>
+                        <button class="remove-my-books-button" data-book-id="${book.id}">
+                            Remove
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark-x"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16Z"/><path d="m14.5 9.5-5 5"/><path d="m9.5 9.5 5 5"/></svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            // Add event listener to the "Remove" button
+            const removeButton = bookCard.querySelector('.remove-my-books-button');
+            removeButton.addEventListener('click', () => removeMyBook(book.id));
+
+            return bookCard;
+        }
+
+        /**
+         * Loads books saved in "My Books" from localStorage and displays them.
+         */
+        async function loadMyBooks() {
+            const myBooksGrid = document.getElementById('myBooksGrid');
+            myBooksGrid.innerHTML = ''; // Clear existing content
+
+            const myBookIds = getMyBooks();
+
+            if (myBookIds.length === 0) {
+                myBooksGrid.innerHTML = '<p class="col-span-full text-center empty-message">Your reading list is empty! Go to the <a href="index.html" class="text-blue-600 hover:underline">Home page</a> to add books.</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('books.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const allBooks = await response.json();
+
+                const booksToShow = allBooks.filter(book => myBookIds.includes(book.id));
+
+                if (booksToShow.length === 0) {
+                     myBooksGrid.innerHTML = '<p class="col-span-full text-center empty-message">No matching books found in your list. They might have been removed from the main library.</p>';
+                } else {
+                    booksToShow.forEach(book => {
+                        const bookCard = createMyBookCard(book);
+                        myBooksGrid.appendChild(bookCard);
+                    });
+                }
+
+            } catch (error) {
+                console.error("Failed to load books for My Books page:", error);
+                myBooksGrid.innerHTML = `<p class="col-span-full text-center text-red-600 text-lg">Error loading your reading list. Please try again later.<br>Error: ${error.message}</p>`;
+            }
+        }
+
+        // Load books when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', loadMyBooks);
+    </script>
+</body>
+</html>

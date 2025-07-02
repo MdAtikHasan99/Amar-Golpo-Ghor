@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/images/icon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Amar Golpo Ghor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header-nav {
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 1rem 0;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #495057;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-link:hover {
+            color: #007bff;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #007bff;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 2.25rem;
+            color: #343a40;
+        }
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .settings-container {
+            background-color: #ffffff;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
+            width: 100%;
+            text-align: left; /* Align content left within container */
+        }
+        .settings-container h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 2rem;
+            text-align: center; /* Center title */
+        }
+        .setting-group {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: #f0f4f8; /* Lighter background for groups */
+            border-radius: 12px;
+            border: 1px solid #e0e6ed;
+        }
+        .setting-group label {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 1rem;
+        }
+        .option-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 1.2rem;
+            margin-right: 0.8rem;
+            background-color: #e9ecef; /* Default gray */
+            color: #495057;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            border: 1px solid #ced4da;
+        }
+        .option-button:hover:not(.selected) {
+            background-color: #dee2e6;
+            transform: translateY(-2px);
+        }
+        .option-button.selected {
+            background-color: #007bff; /* Primary blue when selected */
+            color: white;
+            border-color: #007bff;
+            box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+        }
+        .option-button.selected:hover {
+            transform: none; /* No lift when selected */
+        }
+
+        /* Dark mode preview styles for settings page */
+        body.dark-mode {
+            background-color: #212121; /* Dark background */
+            color: #e0e0e0; /* Light text */
+        }
+        body.dark-mode .header-nav {
+            background-color: #333333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .nav-link {
+            color: #bbbbbb;
+        }
+        body.dark-mode .nav-link:hover {
+            color: #90caf9;
+        }
+        body.dark-mode .nav-link::after {
+            background: #90caf9;
+        }
+        body.dark-mode .logo {
+            color: #ffffff;
+        }
+        body.dark-mode .settings-container {
+            background-color: #333333;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: #444444;
+        }
+        body.dark-mode .settings-container h2 {
+            color: #ffffff;
+        }
+        body.dark-mode .setting-group {
+            background-color: #424242;
+            border-color: #555555;
+        }
+        body.dark-mode .setting-group label {
+            color: #ffffff;
+        }
+        body.dark-mode .option-button {
+            background-color: #555555;
+            color: #e0e0e0;
+            border-color: #666666;
+        }
+        body.dark-mode .option-button:hover:not(.selected) {
+            background-color: #616161;
+        }
+        body.dark-mode .option-button.selected {
+            background-color: #90caf9; /* Lighter blue for dark mode selected */
+            color: #212121;
+            border-color: #90caf9;
+            box-shadow: 0 3px 8px rgba(144, 202, 249, 0.3);
+        }
+
+        /* Back Button */
+        .back-button-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.8rem;
+            background-color: #6c757d; /* Gray for back button */
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+            text-decoration: none;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 117, 125, 0.4);
+        }
+        .back-button svg {
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            background-color: #343a40; /* Dark background for footer */
+            color: #f8f9fa; /* Light text */
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow on top */
+        }
+        .footer-links a {
+            color: #adb5bd; /* Lighter gray for footer links */
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #007bff; /* Primary blue on hover */
+        }
+        .footer-text {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #ced4da;
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.75rem; }
+            .nav-link { font-size: 0.9rem; }
+            .section-title { font-size: 2.25rem; margin-bottom: 2rem; }
+            .book-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 1rem;
+                padding: 0 0.8rem;
+            }
+            .book-title { font-size: 1.1rem; }
+            .book-author { font-size: 0.75rem; }
+            .book-description { font-size: 0.7rem; -webkit-line-clamp: 5; }
+            .read-now-button { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+            .favorite-icon-button { padding: 6px; }
+            .favorite-icon { width: 20px; height: 20px; }
+            footer { padding: 1.5rem 0; }
+            .footer-links a { margin: 0 0.8rem; font-size: 0.9rem; }
+            .footer-text { font-size: 0.8rem; }
+        }
+
+        @media (max-width: 768px) {
+            .logo { font-size: 1.75rem; }
+            .nav-link { font-size: 0.9rem; }
+            .settings-container { padding: 2rem; }
+            .settings-container h2 { font-size: 2rem; }
+            .setting-group { padding: 1rem; }
+            .setting-group label { font-size: 1rem; }
+            .option-button { padding: 0.6rem 1rem; font-size: 0.9rem; margin-right: 0.6rem;}
+            .back-button { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
+        }
+        @media (max-width: 480px) {
+            .header-nav .container { flex-direction: column; align-items: center; }
+            .header-nav nav ul { margin-top: 1rem; width: 100%; justify-content: space-around; }
+            .settings-container { padding: 1.5rem; margin: 0 0.5rem; }
+            .settings-container h2 { font-size: 1.8rem; }
+            .option-button { margin-bottom: 0.5rem; width: calc(50% - 0.4rem); /* Two buttons per row */ }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-nav">
+        <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4">
+            <h1 class="logo">Amar Golpo Ghor</h1>
+            <ul class="flex space-x-6 sm:space-x-8 mt-4 sm:mt-0">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="my-books.html" class="nav-link">My Books</a></li>
+                <li><a href="genres.html" class="nav-link">Genres</a></li>
+                <li><a href="settings.html" class="nav-link">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="settings-container">
+            <h2>App Settings</h2>
+
+            <div class="setting-group">
+                <label for="theme-setting">Theme:</label>
+                <div id="theme-setting" class="flex gap-2 flex-wrap">
+                    <button class="option-button" data-setting-type="theme" data-setting-value="light">Light Mode</button>
+                    <button class="option-button" data-setting-type="theme" data-setting-value="dark">Dark Mode</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label for="font-size-setting">Reading Font Size:</label>
+                <div id="font-size-setting" class="flex gap-2 flex-wrap">
+                    <button class="option-button" data-setting-type="fontSize" data-setting-value="small">Small</button>
+                    <button class="option-button" data-setting-type="fontSize" data-setting-value="medium">Medium</button>
+                    <button class="option-button" data-setting-type="fontSize" data-setting-value="large">Large</button>
+                    <button class="option-button" data-setting-type="fontSize" data-setting-value="xlarge">X-Large</button>
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <label for="line-height-setting">Reading Line Height:</label>
+                <div id="line-height-setting" class="flex gap-2 flex-wrap">
+                    <button class="option-button" data-setting-type="lineHeight" data-setting-value="normal">Normal</button>
+                    <button class="option-button" data-setting-type="lineHeight" data-setting-value="relaxed">Relaxed</button>
+                    <button class="option-button" data-setting-type="lineHeight" data-setting-value="loose">Loose</button>
+                </div>
+            </div>
+
+            <div class="back-button-container">
+                <a href="index.html" class="back-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container mx-auto">
+            <div class="footer-links flex flex-wrap justify-center text-center gap-4">
+                <a href="index.html">Home</a>
+                <a href="my-books.html">My Books</a>
+                <a href="genres.html">Genres</a>
+                <a href="settings.html">Settings</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms-conditions.html">Terms & Conditions</a>
+            </div>
+            <p class="footer-text mt-4">&copy; 2025 Amar Golpo Ghor. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const SETTINGS_KEY = 'bookifySettings';
+
+        /**
+         * Loads settings from localStorage or provides defaults.
+         * @returns {Object} Current settings.
+         */
+        function getSettings() {
+            try {
+                const settingsJson = localStorage.getItem(SETTINGS_KEY);
+                return settingsJson ? JSON.parse(settingsJson) : {
+                    theme: 'light',
+                    fontSize: 'medium',
+                    lineHeight: 'normal'
+                };
+            } catch (e) {
+                console.error("Error parsing settings from localStorage, using defaults:", e);
+                return { theme: 'light', fontSize: 'medium', lineHeight: 'normal' };
+            }
+        }
+
+        /**
+         * Saves settings to localStorage.
+         * @param {Object} settings - The settings object to save.
+         */
+        function saveSettings(settings) {
+            try {
+                localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+            } catch (e) {
+                console.error("Error saving settings to localStorage:", e);
+            }
+        }
+
+        /**
+         * Applies the selected theme to the body element.
+         * @param {string} theme - 'light' or 'dark'.
+         */
+        function applyThemeToPage(theme) {
+            document.body.classList.remove('light-mode', 'dark-mode');
+            document.body.classList.add(`${theme}-mode`);
+        }
+
+        /**
+         * Updates the UI to show which option is selected for a setting group.
+         * @param {string} settingType - The type of setting (e.g., 'theme', 'fontSize').
+         * @param {string} selectedValue - The value currently selected.
+         */
+        function updateSettingUI(settingType, selectedValue) {
+            const buttons = document.querySelectorAll(`button[data-setting-type="${settingType}"]`);
+            buttons.forEach(button => {
+                if (button.dataset.settingValue === selectedValue) {
+                    button.classList.add('selected');
+                } else {
+                    button.classList.remove('selected');
+                }
+            });
+        }
+
+        /**
+         * Initializes the settings page by loading saved settings and setting up event listeners.
+         */
+        function initializeSettingsPage() {
+            const currentSettings = getSettings();
+
+            // Apply initial theme to settings page itself for immediate feedback
+            applyThemeToPage(currentSettings.theme);
+
+            // Update UI for each setting group
+            updateSettingUI('theme', currentSettings.theme);
+            updateSettingUI('fontSize', currentSettings.fontSize);
+            updateSettingUI('lineHeight', currentSettings.lineHeight);
+
+            // Add event listeners for theme buttons
+            document.getElementById('theme-setting').addEventListener('click', (event) => {
+                const button = event.target.closest('.option-button');
+                if (button && button.dataset.settingType === 'theme') {
+                    const newTheme = button.dataset.settingValue;
+                    const settings = getSettings();
+                    settings.theme = newTheme;
+                    saveSettings(settings);
+                    applyThemeToPage(newTheme); // Apply to current page
+                    updateSettingUI('theme', newTheme);
+                }
+            });
+
+            // Add event listeners for font size buttons
+            document.getElementById('font-size-setting').addEventListener('click', (event) => {
+                const button = event.target.closest('.option-button');
+                if (button && button.dataset.settingType === 'fontSize') {
+                    const newFontSize = button.dataset.settingValue;
+                    const settings = getSettings();
+                    settings.fontSize = newFontSize;
+                    saveSettings(settings);
+                    updateSettingUI('fontSize', newFontSize);
+                }
+            });
+
+            // Add event listeners for line height buttons
+            document.getElementById('line-height-setting').addEventListener('click', (event) => {
+                const button = event.target.closest('.option-button');
+                if (button && button.dataset.settingType === 'lineHeight') {
+                    const newLineHeight = button.dataset.settingValue;
+                    const settings = getSettings();
+                    settings.lineHeight = newLineHeight;
+                    saveSettings(settings);
+                    updateSettingUI('lineHeight', newLineHeight);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeSettingsPage);
+    </script>
+</body>
+</html>
