@@ -30,16 +30,16 @@
     "genre": "রোমান্টিক",
     "chapters": [
       {
-        "title": "",
-        "content": "<p class=\"book-paragraph\"></p>"
+        "title": "প্রেমঘোর পর্ব ১",
+        "content": "<p class=\"book-paragraph\">আসছে খুব তাড়াতাড়ি</p>"
       },
       {
-        "title": "",
-        "content":"<p class=\"book-paragraph\"></p>"
+        "title": "প্রেমঘোর পর্ব ২",
+        "content":"<p class=\"book-paragraph\">আসছে খুব তাড়াতাড়ি</p>"
       },
       {
-        "title": "",
-        "content":"<p class=\"book-paragraph\"></p>"
+        "title": "প্রেমঘোর পর্ব ৩",
+        "content":"<p class=\"book-paragraph\">আসছে খুব তাড়াতাড়ি</p>"
       }
     ]
   }
