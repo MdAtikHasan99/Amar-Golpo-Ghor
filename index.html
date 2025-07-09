@@ -18,11 +18,13 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
         }
         .header-nav {
             background-color: #ffffff;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             padding: 1rem 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
         .nav-link {
             font-weight: 500;
@@ -52,6 +54,7 @@
             font-weight: 800;
             font-size: 2.25rem;
             color: #343a40;
+            transition: color 0.3s ease;
         }
         .main-content-area {
             flex-grow: 1;
@@ -62,7 +65,48 @@
             font-weight: 700;
             color: #212529;
             margin-bottom: 2.5rem;
+            transition: color 0.3s ease;
         }
+        /* Search Bar Styles */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem; /* Center and add bottom margin */
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 9999px; /* Pill shape */
+            overflow: hidden; /* Ensures shadow and border-radius apply correctly */
+            transition: box-shadow 0.3s ease;
+        }
+        .search-container:focus-within {
+            box-shadow: 0 5px 20px rgba(0, 123, 255, 0.2); /* Blue shadow on focus */
+        }
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            padding-right: 4rem; /* Space for icon */
+            border: 1px solid #ced4da;
+            border-radius: 9999px; /* Pill shape */
+            font-size: 1.1rem;
+            color: #343a40;
+            background-color: #ffffff;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        .search-icon {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            width: 24px;
+            height: 24px;
+            pointer-events: none; /* Allows clicks to pass through to input */
+            transition: color 0.3s ease;
+        }
+
         .book-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -75,12 +119,12 @@
             background-color: #ffffff;
             border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             border: 1px solid #e9ecef;
-            position: relative; /* Needed for absolute positioning of favorite icon */
+            position: relative;
         }
         .book-card:hover {
             transform: translateY(-8px);
@@ -93,7 +137,7 @@
             z-index: 10;
         }
         .favorite-icon-button {
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            background-color: rgba(255, 255, 255, 0.8);
             border-radius: 50%;
             padding: 8px;
             display: flex;
@@ -102,6 +146,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
         }
         .favorite-icon-button:hover {
             background-color: rgba(255, 255, 255, 1);
@@ -110,12 +155,12 @@
         .favorite-icon {
             width: 24px;
             height: 24px;
-            color: #ccc; /* Default grey for unfavorited */
-            transition: color 0.3s ease;
+            color: #ccc;
+            transition: color 0.3s ease, fill 0.3s ease;
         }
         .favorite-icon.favorited {
-            color: #ff4d4f; /* Red for favorited */
-            fill: #ff4d4f; /* Fill the heart when favorited */
+            color: #ff4d4f;
+            fill: #ff4d4f;
         }
         .book-image-container {
             position: relative;
@@ -153,11 +198,13 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            transition: color 0.3s ease;
         }
         .book-author {
             font-size: 0.8rem;
             color: #6c757d;
             margin-bottom: 0.6rem;
+            transition: color 0.3s ease;
         }
         .book-description {
             font-size: 0.75rem;
@@ -169,12 +216,13 @@
             display: -webkit-box;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
+            transition: color 0.3s ease;
         }
         .button-group {
             display: flex;
-            flex-direction: column; /* Stack buttons vertically */
-            gap: 0.5rem; /* Space between buttons */
-            margin-top: 1rem; /* Space from description */
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
         }
         .read-now-button {
             display: inline-flex;
@@ -202,32 +250,138 @@
             width: 16px;
             height: 16px;
         }
+        /* Footer Styles */
         footer {
             background-color: #343a40; /* Dark background for footer */
             color: #f8f9fa; /* Light text */
-            padding: 2rem 0;
+            padding: 2.5rem 0;
             text-align: center;
             box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05); /* Soft shadow on top */
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
-        .footer-links a {
-            color: #adb5bd; /* Lighter gray for footer links */
-            margin: 0 1rem;
-            text-decoration: none;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap; /* Allow links to wrap on smaller screens */
+        }
+        .footer-link {
+            color: #ced4da; /* Lighter gray for footer links */
+            font-weight: 500;
             transition: color 0.3s ease;
+            text-decoration: none;
         }
-        .footer-links a:hover {
+        .footer-link:hover {
             color: #007bff; /* Primary blue on hover */
         }
         .footer-text {
-            margin-top: 1rem;
             font-size: 0.9rem;
-            color: #ced4da;
+            color: #adb5bd; /* Even lighter gray */
+        }
+
+        /* Dark Mode Styles (from previous updates) */
+        body.dark-mode {
+            background-color: #212121;
+            color: #e0e0e0;
+        }
+        body.dark-mode .header-nav {
+            background-color: #333333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .nav-link {
+            color: #bbbbbb;
+        }
+        body.dark-mode .nav-link:hover {
+            color: #90caf9;
+        }
+        body.dark-mode .nav-link::after {
+            background: #90caf9;
+        }
+        body.dark-mode .logo {
+            color: #ffffff;
+        }
+        body.dark-mode .section-title {
+            color: #ffffff;
+        }
+        body.dark-mode .search-input {
+            background-color: #424242;
+            border-color: #555555;
+            color: #e0e0e0;
+        }
+        body.dark-mode .search-input:focus {
+            border-color: #90caf9;
+        }
+        body.dark-mode .search-icon {
+            color: #bbbbbb;
+        }
+        body.dark-mode .book-card {
+            background-color: #333333;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: #444444;
+        }
+        body.dark-mode .book-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-mode .favorite-icon-button {
+            background-color: rgba(51, 51, 51, 0.8);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .favorite-icon-button:hover {
+            background-color: rgba(51, 51, 51, 1);
+        }
+        body.dark-mode .favorite-icon {
+            color: #666; /* Darker grey for unfavorited in dark mode */
+        }
+        body.dark-mode .favorite-icon.favorited {
+            color: #ff6b6b; /* Slightly brighter red for dark mode */
+            fill: #ff6b6b;
+        }
+        body.dark-mode .book-title {
+            color: #ffffff;
+        }
+        body.dark-mode .book-author {
+            color: #bbbbbb;
+        }
+        body.dark-mode .book-description {
+            color: #bbbbbb;
+        }
+        body.dark-mode .read-now-button {
+            background-color: #90caf9; /* Lighter blue for dark mode */
+            color: #212121;
+            box-shadow: 0 5px 15px rgba(144, 202, 249, 0.3);
+        }
+        body.dark-mode .read-now-button:hover {
+            background-color: #64b5f6; /* Darker blue on hover for dark mode */
+            box-shadow: 0 8px 20px rgba(144, 202, 249, 0.4);
+        }
+        body.dark-mode .text-gray-600 { /* For the descriptive text below title */
+            color: #bbbbbb;
+        }
+        body.dark-mode .text-gray-500 { /* For loading messages */
+            color: #999999;
+        }
+        body.dark-mode footer {
+            background-color: #1a1a1a; /* Even darker for footer in dark mode */
+            box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode .footer-link {
+            color: #999999;
+        }
+        body.dark-mode .footer-link:hover {
+            color: #90caf9;
+        }
+        body.dark-mode .footer-text {
+            color: #888888;
         }
 
         @media (max-width: 768px) {
             .logo { font-size: 1.75rem; }
             .nav-link { font-size: 0.9rem; }
             .section-title { font-size: 2.25rem; margin-bottom: 2rem; }
+            .search-container { max-width: 90%; margin-bottom: 2rem; }
+            .search-input { padding: 0.8rem 1.2rem; padding-right: 3.5rem; font-size: 1rem; }
+            .search-icon { right: 1.2rem; width: 22px; height: 22px; }
             .book-grid {
                 grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
                 gap: 1rem;
@@ -239,13 +393,15 @@
             .read-now-button { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
             .favorite-icon-button { padding: 6px; }
             .favorite-icon { width: 20px; height: 20px; }
-            footer { padding: 1.5rem 0; }
-            .footer-links a { margin: 0 0.8rem; font-size: 0.9rem; }
-            .footer-text { font-size: 0.8rem; }
+            footer { padding: 2rem 0; }
+            .footer-links { gap: 1rem; }
         }
         @media (max-width: 480px) {
             .header-nav .container { flex-direction: column; align-items: center; }
             .header-nav nav ul { margin-top: 1rem; width: 100%; justify-content: space-around; }
+            .search-container { max-width: 95%; margin-bottom: 1.5rem; }
+            .search-input { padding: 0.7rem 1rem; padding-right: 3rem; font-size: 0.9rem; }
+            .search-icon { right: 1rem; width: 20px; height: 20px; }
             .book-grid { grid-template-columns: 1fr; padding: 0 0.5rem; }
             .book-card { margin: 0 auto; max-width: 250px; }
             .section-title { font-size: 1.8rem; }
@@ -273,26 +429,37 @@
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">Dive into a world of stories, from captivating mysteries to epic fantasies. Find your perfect book and start reading today!</p>
         </section>
 
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input type="text" id="searchBar" class="search-input" placeholder="Search by title or author...">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </div>
+
         <div id="bookGrid" class="book-grid">
+            <!-- Book cards will be dynamically loaded here by JavaScript -->
             <p id="loadingMessage" class="col-span-full text-center text-gray-500 text-lg">Loading books...</p>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer>
         <div class="container mx-auto">
-            <div class="footer-links flex flex-wrap justify-center text-center gap-4">
-                <a href="index.html">Home</a>
-                <a href="my-books.html">My Books</a>
-                <a href="genres.html">Genres</a>
-                <a href="settings.html">Settings</a>
-                <a href="privacy-policy.html">Privacy Policy</a>
-                <a href="terms-conditions.html">Terms & Conditions</a>
+            <div class="footer-links">
+                <a href="index.html" class="footer-link">Home</a>
+                <a href="my-books.html" class="footer-link">My Books</a>
+                <a href="genres.html" class="footer-link">Genres</a>
+                <a href="settings.html" class="footer-link">Settings</a>
+                <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
+                <a href="terms-conditions.html" class="footer-link">Terms & Conditions</a>
             </div>
-            <p class="footer-text mt-4">&copy; 2025 Amar Golpo Ghor. All rights reserved.</p>
+            <p class="footer-text">&copy; 2025 Amar Golpo Ghor. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
+        const SETTINGS_KEY = 'bookifySettings';
+        let allBooksData = []; // Store all books once fetched
+
         /**
          * Gets the current list of book IDs saved to "My Books" from localStorage.
          * @returns {string[]} An array of book IDs.
@@ -320,15 +487,44 @@
             const index = myBooks.indexOf(bookId);
 
             if (index > -1) {
+                // Book is favorited, so remove it
                 myBooks.splice(index, 1);
                 iconElement.classList.remove('favorited');
                 iconElement.setAttribute('fill', 'none');
             } else {
+                // Book is not favorited, so add it
                 myBooks.push(bookId);
                 iconElement.classList.add('favorited');
                 iconElement.setAttribute('fill', 'currentColor');
             }
             saveMyBooks(myBooks);
+        }
+
+        /**
+         * Loads settings from localStorage or provides defaults.
+         * @returns {Object} Current settings.
+         */
+        function getSettings() {
+            try {
+                const settingsJson = localStorage.getItem(SETTINGS_KEY);
+                return settingsJson ? JSON.parse(settingsJson) : {
+                    theme: 'light',
+                    fontSize: 'medium',
+                    lineHeight: 'normal'
+                };
+            } catch (e) {
+                console.error("Error parsing settings from localStorage, using defaults:", e);
+                return { theme: 'light', fontSize: 'medium', lineHeight: 'normal' };
+            }
+        }
+
+        /**
+         * Applies the selected theme to the body element.
+         * @param {string} theme - 'light' or 'dark'.
+         */
+        function applyThemeToPage(theme) {
+            document.body.classList.remove('light-mode', 'dark-mode');
+            document.body.classList.add(`${theme}-mode`);
         }
 
         /**
@@ -377,24 +573,51 @@
             return bookCard;
         }
 
-        async function loadBooks() {
+        /**
+         * Filters and renders book cards based on a search query.
+         * @param {string} searchQuery - The text to search for in book titles and authors.
+         */
+        function renderFilteredBooks(searchQuery = '') {
             const bookGrid = document.getElementById('bookGrid');
-            bookGrid.innerHTML = '';
+            bookGrid.innerHTML = ''; // Clear existing content
+
+            const lowerCaseQuery = searchQuery.toLowerCase();
+            const filteredBooks = allBooksData.filter(book =>
+                book.title.toLowerCase().includes(lowerCaseQuery) ||
+                book.author.toLowerCase().includes(lowerCaseQuery)
+            );
+
+            if (filteredBooks.length === 0) {
+                bookGrid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg">No books found matching your search.</p>';
+            } else {
+                filteredBooks.forEach(book => {
+                    const bookCard = createBookCard(book);
+                    bookGrid.appendChild(bookCard);
+                });
+            }
+        }
+
+        /**
+         * Fetches all book data from books.json and stores it, then renders all books.
+         */
+        async function loadAllBooksAndRender() {
+            // Apply theme setting on page load
+            applyThemeToPage(getSettings().theme);
+
+            const bookGrid = document.getElementById('bookGrid');
+            bookGrid.innerHTML = '<p id="loadingMessage" class="col-span-full text-center text-gray-500 text-lg">Loading books...</p>';
 
             try {
                 const response = await fetch('books.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                const books = await response.json();
+                allBooksData = await response.json(); // Store the fetched data
 
-                if (books.length === 0) {
+                if (allBooksData.length === 0) {
                     bookGrid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg">No books available yet. Check back soon!</p>';
                 } else {
-                    books.forEach(book => {
-                        const bookCard = createBookCard(book);
-                        bookGrid.appendChild(bookCard);
-                    });
+                    renderFilteredBooks(''); // Render all books initially
                 }
             } catch (error) {
                 console.error("Failed to load books:", error);
@@ -402,7 +625,13 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadBooks);
+        // Event listener for the search bar
+        document.getElementById('searchBar').addEventListener('input', (event) => {
+            renderFilteredBooks(event.target.value);
+        });
+
+        // Load all books when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', loadAllBooksAndRender);
     </script>
 </body>
 </html>
